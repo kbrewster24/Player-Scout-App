@@ -1,0 +1,58 @@
+/* Style buttons */
+.btn {
+    width: 85%;
+    height: 20%;
+    background-color: DodgerBlue; /* Blue background */
+    border: none; /* Remove borders */
+    padding: 4px; /* Some padding */
+    cursor: pointer; /* Mouse pointer on hover */
+  }
+  
+  /* Darker background on mouse-over */
+  .btn:hover {
+    background-color: RoyalBlue;
+  }
+
+  .p2 {
+    display: "inline-block"
+  }
+
+
+
+ .tableStyle  {
+    display: inline-block;
+    height: 40%;
+    width: 40%;
+    vertical-Align: bottom;
+    font-Family: Helvetica;
+  }
+
+.menuStyle {
+    display: inline-block;
+    width: 10%;
+    margin-Right: 8px;
+    list-style: none;
+    height: 45%;
+    vertical-Align: bottom;
+    min-Height: 70px;
+  }
+
+ .headerStyle {
+    font-Size: 1.4vw;
+    font-Family: Times;
+    font-weight: bold;
+    white-Space: nowrap;
+    padding: 3px;
+  }
+  .inputStyle {
+    height: 30%;
+    width: 98%;
+    background-Color: lightgrey;
+    border: none;
+    resize: none;
+    font-Size: .8vw;
+    overflow: hidden;
+  }
+  .listStyle {
+      list-Style:none;
+  }

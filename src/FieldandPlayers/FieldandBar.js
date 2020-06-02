@@ -12,6 +12,7 @@ class FieldandBar extends React.Component {
       subs: [],
       done: false,
       isSubbing: true,
+      //test used to load in dummy data so we are not going to the server every run
       test: true
     }
 
@@ -22,126 +23,122 @@ class FieldandBar extends React.Component {
 
   }
   
-    componentDidMount() {
-      if(this.state.test){
-        console.log('hello {}', JSON.parse(mytest.body)[1])
-        var temp = JSON.parse(mytest.body)
-        var temp2 = temp.slice(0,10)
-        var temp3 = temp.slice(10, temp.length)
-        this.setState( {starters: temp2, subs: temp3, done: true})
+  componentDidMount() {
+    if(this.state.test){
+      console.log('hello {}', JSON.parse(mytest.body)[1])
+      var temp = JSON.parse(mytest.body)
+      var temp2 = temp.slice(0,10)
+      var temp3 = temp.slice(10, temp.length)
+      this.setState( {starters: temp2, subs: temp3, done: true})
+    }
+    else{
+      this.getData()
+    }
+  }
+
+  //gets the data from the server for player information
+  getData(){
+    var xhr = new XMLHttpRequest()
+
+    xhr.addEventListener('load', () => {
+      console.log(JSON.parse(JSON.parse(xhr.responseText).body)[1])
+    })
+
+    xhr.open('POST', 'https://2d3hv99du2.execute-api.us-east-1.amazonaws.com/live/cart')
+
+    xhr.onload = () => {
+      var temp = JSON.parse(JSON.parse(xhr.responseText).body)
+      var temp2 = temp.slice(0,10)
+      var temp3 = temp.slice(10, temp.length)
+      this.setState( {starters: temp2, subs: temp3, done: true})
+      // this.setState( {users: JSON.parse(JSON.parse(xhr.responseText).body), done: true})
+    }
+
+    xhr.send(JSON.stringify({url: 'https://hokiesports.com/sports/mens-soccer/stats'}))
+  }
+
+  //remove a starter in case of error with algorithm selecting players
+  RemoveStarter(e){
+    let updatedStarters = this.state.starters.filter(
+      (l, index) => {
+        console.log(l.number)
+        return e !== l.number;
       }
-      else{
-        this.getData()
+    )
+    this.setState({starters: updatedStarters})
+  }
+
+  //delete sub in case of error with the algorithm
+  RemoveSub(e){
+    let updatedSubs = this.state.subs.filter(
+      (l, index) => {
+        console.log(l.number)
+        return e !== l.number;
       }
-    }
+    )
+    this.setState({subs: updatedSubs})
+  }
 
-    getData(){
-      var xhr = new XMLHttpRequest()
 
-      xhr.addEventListener('load', () => {
-        console.log(JSON.parse(JSON.parse(xhr.responseText).body)[1])
-      })
-
-      xhr.open('POST', 'https://2d3hv99du2.execute-api.us-east-1.amazonaws.com/live/cart')
-
-      xhr.onload = () => {
-        var temp = JSON.parse(JSON.parse(xhr.responseText).body)
-        var temp2 = temp.slice(0,10)
-        var temp3 = temp.slice(10, temp.length)
-        this.setState( {starters: temp2, subs: temp3, done: true})
-        // this.setState( {users: JSON.parse(JSON.parse(xhr.responseText).body), done: true})
+  //Take player of the "sub bar" and add to the field
+  AddStarterRemoveSub(e) {
+    console.log(e)
+    if(this.state.starters.length >= 11)
+      {
+        this.setState({isSubbing: true})
+        return
       }
-
-      xhr.send(JSON.stringify({url: 'https://hokiesports.com/sports/mens-soccer/stats'}))
-    }
-
-    RemoveStarter(e){
-      let updatedStarters = this.state.starters.filter(
-        (l, index) => {
-          console.log(l.number)
-          return e !== l.number;
-        }
-      )
-      this.setState({starters: updatedStarters})
-    }
-
-    RemoveSub(e){
-      let updatedSubs = this.state.subs.filter(
-        (l, index) => {
-          console.log(l.number)
-          return e !== l.number;
-        }
-      )
-      this.setState({subs: updatedSubs})
-    }
-
-    AddStarterRemoveSub(e) {
-      console.log(e)
-      if(this.state.starters.length >= 11)
+    let updatedStarters = this.state.starters
+    let updatedSubs = this.state.subs.filter(
+      (l, index) => {
+        console.log(l.number)
+        if( e == l.number)
         {
-          this.setState({isSubbing: true})
-          return
+          updatedStarters.push(l)
         }
-      let updatedStarters = this.state.starters
-      let updatedSubs = this.state.subs.filter(
-        (l, index) => {
-          console.log(l.number)
-          if( e == l.number)
-          {
-            updatedStarters.push(l)
-          }
-          return e !== l.number;
-        }
-      )
-      console.log(this.state.subs)
-      this.setState({subs: updatedSubs, starters: updatedStarters});
-    }
+        return e !== l.number;
+      }
+    )
+    console.log(this.state.subs)
+    this.setState({subs: updatedSubs, starters: updatedStarters});
+  }
 
-    AddSubRemoveStarter(e){
-      console.log("hello")
-      console.log(e)
-      let updatedSubs = this.state.subs
-      let updatedStarters = this.state.starters.filter(
-        (l, index) => {
-          console.log(l.number)
-          if( e == l.number)
-          {
-            updatedSubs.push(l)
-          }
-          return e !== l.number;
-        }
-      )
-      console.log(this.state.updatedSubs)
-      this.setState({subs: updatedSubs, starters: updatedStarters});
-      this.render()
-    }
 
+  //Take player off the field and put on the sub bar
+  AddSubRemoveStarter(e){
+    console.log("hello")
+    console.log(e)
+    let updatedSubs = this.state.subs
+    let updatedStarters = this.state.starters.filter(
+      (l, index) => {
+        console.log(l.number)
+        if( e == l.number)
+        {
+          updatedSubs.push(l)
+        }
+        return e !== l.number;
+      }
+    )
+    console.log(this.state.updatedSubs)
+    this.setState({subs: updatedSubs, starters: updatedStarters});
+    this.render()
+  }
+
+  render () 
+  {
    
-    
-
-
-    render () {
-    var fieldandBarStyle = {
-      margin: 10,
-      color: "#333",
-      display: "inline-block",
-      fontFamily: "monospace",
-      fontSize: "20px",
-      width: "100%",
-      height: "100vh",
-      alignText: "left"
-      
-     };
-    if(!this.state.done){
+    //if we are still loading info display something else
+    if(!this.state.done)
+    {
       return (
         <div>Users loading</div>
       )
     }
-    else{
-      
+    else
+    {
       console.log(this.state.starters)
       return(
-        <div style={fieldandBarStyle} onClick={this.handleAllClickEvents}>
+        <div className="fieldandBarStyle" onClick={this.handleAllClickEvents}>
 
           <Field list = {this.state.starters} 
           AddSubRemoveStarter = {this.AddSubRemoveStarter}

@@ -1,6 +1,7 @@
 import React from 'react';
 import DraggablePlayer from './DraggablePlayer'
 import Sub from './sub'
+import './FieldandPlayer.css'
 
 
 class Field extends React.Component {
@@ -22,24 +23,10 @@ class Field extends React.Component {
   
   
   render () {
- var fieldStyle = {
-      margin: "5px",
-      backgroundColor: "#21CC37",
-      color: "#333",
-      fontFamily: "monospace",
-      fontSize: "20px",
-      width: "85%",
-      height: "95vh",
-      display: "inline-block",
-      backgroundImage: "url(https://st2.depositphotos.com/2021995/9203/v/950/depositphotos_92034148-stock-illustration-realistic-vertical-football-soccer-field.jpg)",
-      backgroundRepeat: "no-repeat",
-      backgroundSize: "cover",
-      minHeight: "1100px",
-      minWidth: "800px"
-     };
+ 
        console.log(this.props.list)
       return(
-        <div style={fieldStyle}>
+        <div className= "fieldStyle">
           {this.props.list.map(function(item){
             return <DraggablePlayer bgColor="#9DCEF0" goals = {item.goals}
              starts = {item.gsgp} assists = {item.assists}

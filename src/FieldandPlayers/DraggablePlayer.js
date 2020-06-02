@@ -59,7 +59,7 @@ class Player extends React.Component {
 render () {
     var playerStyle =  {
         padding: "3px",
-        backgroundColor: this.props.color,
+        backgroundColor: this.props.bgColor,
         color: "#333",
         fontFamily: "monospace",
         fontSize: ".9vw",

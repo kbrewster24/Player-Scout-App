@@ -24,7 +24,7 @@ class RightBar extends React.Component {
       width: "11%",
       minHeight: "0px"
 
-      
+       
      };
      return(
       <div style={barStyle}>

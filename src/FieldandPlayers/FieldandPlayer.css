@@ -17,8 +17,6 @@
     display: "inline-block"
   }
 
-
-
  .tableStyle  {
     display: inline-block;
     height: 40%;
@@ -56,3 +54,30 @@
   .listStyle {
       list-Style:none;
   }
+
+  .fieldStyle {
+    margin: 5px;
+    background-Color: #21CC37;
+    color: #333;
+    font-Family: monospace;
+    font-Size: 20px;
+    width: 85%;
+    height: 95vh;
+    display: inline-block;
+    background-Image: url(https://st2.depositphotos.com/2021995/9203/v/950/depositphotos_92034148-stock-illustration-realistic-vertical-football-soccer-field.jpg);
+    background-Repeat: no-repeat;
+    background-Size: cover;
+    min-Height: 1100px;
+    min-Width: 800px;
+   }
+
+   .fieldandBarStyle {
+    margin: 10;
+    color: #333;
+    display: inline-block;
+    font-Family: monospace;
+    font-Size: 20px;
+    width: 100%;
+    height: 100vh;
+    text-align: left;
+   }
